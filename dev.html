@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV Console — Saint Tropez</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+    <style>
+        .dev-tag { background: #111; color: #4ade80; font-family: monospace; font-size: 0.7rem; padding: 3px 10px; border-radius: 4px; letter-spacing: 1px; }
+        .sidebar.dev { background: linear-gradient(180deg, #0a0a0a 0%, #1c0e14 100%); }
+        .theme-row { display: grid; grid-template-columns: 1fr 60px 110px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--color-border); }
+        .theme-row label { font-size: 0.85rem; font-weight: 600; color: var(--color-primary); }
+        .theme-row input[type="color"] { width: 56px; height: 38px; border: 2px solid var(--color-border); border-radius: 8px; cursor: pointer; background: none; padding: 2px; }
+        .theme-row code { font-size: 0.75rem; color: var(--color-text-light); }
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+        .toggle-row label { font-weight: 600; font-size: 0.9rem; }
+        .toggle-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--color-accent); cursor: pointer; }
+        .json-area { width: 100%; min-height: 260px; font-family: monospace; font-size: 0.75rem; padding: 12px; border: 2px solid var(--color-border); border-radius: var(--radius); background: #111; color: #4ade80; }
+        .coord-grid { display: grid; grid-template-columns: 1fr 70px 70px 70px auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--color-border); font-size: 0.85rem; }
+        .coord-grid input, .coord-grid select { padding: 6px 8px; border: 2px solid var(--color-border); border-radius: 8px; font-size: 0.85rem; width: 100%; }
+        .danger-zone { border: 2px solid var(--color-danger); }
+        .danger-zone h3 { color: var(--color-danger); }
+    </style>
+</head>
+<body>
+
+    <!-- Dev Login -->
+    <div class="login-screen" id="dev-login-screen">
+        <div class="login-card">
+            <div class="login-logo">
+                <span class="dev-tag">&lt;/&gt; DEV CONSOLE</span>
+                <h1 style="margin-top:12px;">Saint <span>Tropez</span></h1>
+            </div>
+            <h2>Accès développeur</h2>
+            <p>Console séparée — contrôle total, petits détails inclus</p>
+            <form id="dev-login-form">
+                <div class="form-group">
+                    <input type="text" id="dev-username" placeholder="Nom d'utilisateur" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="dev-password" placeholder="Mot de passe développeur" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Entrer</button>
+            </form>
+            <p class="login-hint">Dev par défaut : <strong>dev / DevTropez#2026!Root</strong></p>
+        </div>
+    </div>
+
+    <!-- Dev Panel -->
+    <div class="admin-panel" id="dev-panel" style="display: none;">
+        <aside class="sidebar dev">
+            <div class="sidebar-header">
+                <span class="dev-tag">&lt;/&gt;</span>
+                <h2>DEV <span>Console</span></h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn dnav-btn active" data-dtab="overview">Aperçu</button>
+                <button class="nav-btn dnav-btn" data-dtab="theme">Thème &amp; couleurs</button>
+                <button class="nav-btn dnav-btn" data-dtab="sections">Sections</button>
+                <button class="nav-btn dnav-btn" data-dtab="texts">Textes</button>
+                <button class="nav-btn dnav-btn" data-dtab="tables">Tables (détails)</button>
+                <button class="nav-btn dnav-btn" data-dtab="data">Données &amp; danger</button>
+                <button class="nav-btn dnav-btn" data-dtab="users">Utilisateurs</button>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="view-site-btn" target="_blank">Voir le Site</a>
+                <button class="logout-btn" id="dev-logout-btn">Déconnexion</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1 id="dev-page-title">Aperçu</h1>
+                <p id="dev-page-subtitle">Contrôle total du site</p>
+                <div class="user-badge" id="dev-user-badge" style="display:none;"></div>
+            </header>
+
+            <div class="tab-content active" id="dtab-overview">
+                <div class="stats-grid" id="dev-stats"></div>
+                <div class="form-card">
+                    <h3>État du stockage local</h3>
+                    <div id="dev-storage-info"></div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="dtab-theme">
+                <div class="form-card">
+                    <h3>Couleurs du thème (appliquées en direct sur le site)</h3>
+                    <div id="theme-fields"></div>
+                    <div style="display:flex;gap:12px;margin-top:20px;">
+                        <button class="btn btn-primary" id="theme-save">Enregistrer</button>
+                        <button class="btn btn-danger" id="theme-reset">Réinitialiser</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="dtab-sections">
+                <div class="form-card">
+                    <h3>Sections visibles sur le site</h3>
+                    <div class="toggle-row"><label>Vidéo d'ambiance</label><input type="checkbox" id="sec-video" checked></div>
+                    <div class="toggle-row"><label>Événements</label><input type="checkbox" id="sec-events" checked></div>
+                    <div class="toggle-row"><label>Galerie</label><input type="checkbox" id="sec-gallery" checked></div>
+                    <div class="toggle-row"><label>Avis clients</label><input type="checkbox" id="sec-reviews" checked></div>
+                    <button class="btn btn-primary" id="sections-save" style="margin-top:20px;">Enregistrer</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="dtab-texts">
+                <div class="form-card">
+                    <h3>Textes (FR / AR)</h3>
+                    <div class="form-group"><label>Sous-titre (FR)</label><input type="text" id="txt-fr-subtitle"></div>
+                    <div class="form-group"><label>Slogan (FR)</label><textarea id="txt-fr-tagline" rows="2"></textarea></div>
+                    <div class="form-group"><label>Sous-titre (AR)</label><input type="text" id="txt-ar-subtitle"></div>
+                    <div class="form-group"><label>Slogan (AR)</label><textarea id="txt-ar-tagline" rows="2"></textarea></div>
+                    <button class="btn btn-primary" id="texts-save">Enregistrer</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="dtab-tables">
+                <div class="form-card">
+                    <h3>Coordonnées précises des tables (% du plan)</h3>
+                    <div id="dev-tables-list"></div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="dtab-data">
+                <div class="form-card">
+                    <h3>Export / Import</h3>
+                    <p style="color:var(--color-text-light);font-size:0.9rem;margin-bottom:16px;">Sauvegardez tout le site dans un fichier, ou restaurez depuis un fichier.</p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                        <button class="btn btn-primary" id="data-export">Exporter (JSON)</button>
+                        <input type="file" id="data-import-file" accept=".json,application/json" style="display:none;">
+                        <button class="btn btn-primary" id="data-import">Importer (JSON)</button>
+                    </div>
+                </div>
+                <div class="form-card danger-zone" style="margin-top:24px;">
+                    <h3>Zone danger</h3>
+                    <p style="color:var(--color-text-light);font-size:0.9rem;margin-bottom:16px;">Efface TOUTES les données locales (site, tables, réservations, utilisateurs, médias).</p>
+                    <button class="btn btn-danger" id="data-wipe">Tout effacer</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="dtab-users">
+                <div class="form-card">
+                    <h3>Créer un utilisateur (tous rôles, y compris développeur)</h3>
+                    <form id="dev-add-user-form">
+                        <div class="form-row">
+                            <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="dev-new-username" required></div>
+                            <div class="form-group"><label>Mot de passe</label><input type="password" id="dev-new-password" required></div>
+                        </div>
+                        <div class="form-group"><label>Rôle</label>
+                            <select id="dev-new-role">
+                                <option value="staff">Staff</option>
+                                <option value="owner">Owner</option>
+                                <option value="developer">Developer</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                    </form>
+                </div>
+                <div class="users-list" id="dev-users-list" style="margin-top:24px;"></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="dev-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="dev-modal-title">Modifier</h3>
+                <button class="modal-close" id="dev-modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="dev-modal-body"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="dev-toast"><span id="dev-toast-message"></span></div>
+
+    <script src="security.js"></script>
+    <script src="table-management.js"></script>
+    <script src="dev.js"></script>
+</body>
+</html>

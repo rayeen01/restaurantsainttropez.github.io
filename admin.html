@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Saint Tropez Restaurant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="images/logo.png" alt="Saint Tropez" class="login-logo-img">
+            </div>
+            <h2>Admin Dashboard</h2>
+            <p>Entrez votre mot de passe pour accéder</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Nom d'utilisateur" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Se Connecter</button>
+            </form>
+            <p class="login-hint">Owner par défaut : <strong>owner / TropezOwner#2026</strong><br>Changez-le après connexion (Paramètres).</p>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel" style="display: none;">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/logo.png" alt="Saint Tropez" class="sidebar-logo-img">
+                <h2>Saint <span>Tropez</span></h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-tab="dashboard">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    Dashboard
+                </button>
+                <button class="nav-btn" data-tab="info">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    Infos Restaurant
+                </button>
+                <button class="nav-btn" data-tab="menu">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97L6.5 22h3l-.25-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8h3V2c-3.04 0-5.5 2.46-5.5 5.5z"/></svg>
+                    Menu
+                </button>
+                <button class="nav-btn" data-tab="gallery">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    Galerie
+                </button>
+                <button class="nav-btn" data-tab="events">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    Événements
+                </button>
+                <button class="nav-btn" data-tab="video">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                    Vidéo
+                </button>
+                <button class="nav-btn" data-tab="reviews">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    Avis
+                </button>
+                <button class="nav-btn" data-tab="reservations">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    Réservations
+                </button>
+                <button class="nav-btn" data-tab="tables">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
+                    Tables
+                </button>
+                <button class="nav-btn" data-tab="security">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    Sécurité
+                </button>
+                <button class="nav-btn" data-tab="users">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    Utilisateurs
+                </button>
+                <button class="nav-btn" data-tab="settings">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    Paramètres
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="view-site-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    Voir le Site
+                </a>
+                <button class="logout-btn" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    Déconnexion
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1 id="page-title">Dashboard</h1>
+                <p id="page-subtitle">Vue d'ensemble de votre restaurant</p>
+                <div class="user-badge" id="user-badge" style="display:none;"></div>
+            </header>
+
+            <!-- Dashboard Tab -->
+            <div class="tab-content active" id="tab-dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4a0e1c, #6b1a2d);">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-rating">4.0</span>
+                            <span class="stat-label">Note moyenne</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #c9a96e, #a8864a);">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-reservations">0</span>
+                            <span class="stat-label">Réservations</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #25d366, #1da851);">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-menu-items">6</span>
+                            <span class="stat-label">Plats au menu</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #6b1a2d, #4a0e1c);">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-gallery">8</span>
+                            <span class="stat-label">Photos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-reservations">
+                    <h3>Réservations Récentes</h3>
+                    <div class="reservations-list" id="recent-reservations-list">
+                        <p class="empty-state">Aucune réservation pour le moment</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Tab -->
+            <div class="tab-content" id="tab-info">
+                <div class="form-card">
+                    <h3>Informations du Restaurant</h3>
+                    <form id="info-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nom du restaurant</label>
+                                <input type="text" id="info-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Sous-titre</label>
+                                <input type="text" id="info-subtitle" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline (description)</label>
+                            <textarea id="info-tagline" rows="2"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Téléphone 1</label>
+                                <input type="text" id="info-phone1">
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone 2</label>
+                                <input type="text" id="info-phone2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone 3</label>
+                            <input type="text" id="info-phone3">
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <textarea id="info-address" rows="2"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Horaires</label>
+                                <input type="text" id="info-hours">
+                            </div>
+                            <div class="form-group">
+                                <label>Plus Code</label>
+                                <input type="text" id="info-pluscode">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Instagram</label>
+                                <input type="text" id="info-instagram">
+                            </div>
+                            <div class="form-group">
+                                <label>Instagram URL</label>
+                                <input type="text" id="info-instagram-url">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Facebook</label>
+                                <input type="text" id="info-facebook">
+                            </div>
+                            <div class="form-group">
+                                <label>Facebook URL</label>
+                                <input type="text" id="info-facebook-url">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email de notification (reçoit TOUTES les réservations)</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="email" id="info-notify-email" placeholder="restaurant@exemple.com" style="flex: 1;">
+                                <button type="button" class="btn btn-primary" id="test-notify-email">Tester</button>
+                            </div>
+                            <small style="color: var(--color-text-light); font-size: 0.8rem;">Laissez vide = aucun email envoyé. À la 1ère utilisation, ouvrez l'email reçu et cliquez sur « Activer ».</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Menu Tab -->
+            <div class="tab-content" id="tab-menu">
+                <div class="tab-header">
+                    <h3>Gestion du Menu</h3>
+                    <button class="btn btn-primary" id="add-menu-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Ajouter un plat
+                    </button>
+                </div>
+                <div class="menu-list" id="admin-menu-list"></div>
+            </div>
+
+            <!-- Gallery Tab -->
+            <div class="tab-content" id="tab-gallery">
+                <div class="tab-header">
+                    <h3>Gestion de la Galerie</h3>
+                    <button class="btn btn-primary" id="add-gallery-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Ajouter une photo
+                    </button>
+                </div>
+                <div class="gallery-admin-grid" id="admin-gallery-list"></div>
+            </div>
+
+            <!-- Events Tab -->
+            <div class="tab-content" id="tab-events">
+                <div class="tab-header">
+                    <h3>Gestion des Événements</h3>
+                    <button class="btn btn-primary" id="add-event">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Ajouter un événement
+                    </button>
+                </div>
+                <div class="events-admin-list" id="admin-events-list"></div>
+            </div>
+
+            <!-- Video Tab -->
+            <div class="tab-content" id="tab-video">
+                <div class="form-card">
+                    <h3>Gestion de la Vidéo</h3>
+                    <p style="color: var(--color-text-light); margin-bottom: 20px;">
+                        Ajoutez une vidéo de présentation de votre restaurant. Formats supportés: MP4, WebM.
+                    </p>
+                    <form id="video-form">
+                        <div class="form-group">
+                            <label>Vidéo (importez un fichier ou collez un lien)</label>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                                <input type="file" id="video-file" accept="video/*" style="display: none;">
+                                <button type="button" class="btn btn-primary" id="video-import-btn">Importer une vidéo</button>
+                            </div>
+                            <input type="text" id="video-url" placeholder="videos/ma-video.mp4 ou https://…">
+                            <small id="video-file-status" style="color: var(--color-text-light); font-size: 0.8rem;"></small>
+                        </div>
+                        <div class="form-group">
+                            <label>Image de couverture (poster)</label>
+                            <div class="media-field">
+                                <img id="video-poster-preview" class="media-preview" style="display: none;" alt="Poster">
+                                <div class="media-field-actions">
+                                    <input type="file" id="video-poster-file" accept="image/*" style="display: none;">
+                                    <button type="button" class="btn btn-primary" id="video-poster-btn">Importer une image</button>
+                                    <input type="hidden" id="video-poster" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Titre de la vidéo</label>
+                            <input type="text" id="video-title" placeholder="Découvrez notre restaurant">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                    <div class="video-preview" id="video-preview" style="margin-top: 24px;">
+                        <h4>Aperçu</h4>
+                        <video id="admin-video-preview" controls style="width: 100%; border-radius: var(--radius); margin-top: 12px;">
+                            <source src="" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div class="tab-content" id="tab-reviews">
+                <div class="tab-header">
+                    <h3>Gestion des Avis</h3>
+                    <button class="btn btn-primary" id="add-review">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Ajouter un avis
+                    </button>
+                </div>
+                <div class="reviews-admin-list" id="admin-reviews-list"></div>
+            </div>
+
+            <!-- Reservations Tab -->
+            <div class="tab-content" id="tab-reservations">
+                <div class="tab-header">
+                    <h3>Réservations</h3>
+                    <button class="btn btn-danger" id="clear-reservations">Tout effacer</button>
+                </div>
+                <div class="reservations-table-wrapper">
+                    <table class="reservations-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Téléphone</th>
+                                <th>Date</th>
+                                <th>Heure</th>
+                                <th>Personnes</th>
+                                <th>Table</th>
+                                <th>Statut</th>
+                                <th>Message</th>
+                                <th>Reçu le</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservations-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tables Tab -->
+            <div class="tab-content" id="tab-tables">
+                <div class="tables-layout-wrapper">
+                    <div class="tables-sidebar">
+                        <div class="form-card">
+                            <h3>Statistiques</h3>
+                            <div class="tables-stats" id="tables-stats"></div>
+                        </div>
+                        <div class="form-card">
+                            <h3>Ajouter une Table</h3>
+                            <form id="add-table-form">
+                                <div class="form-group">
+                                    <label>Nom</label>
+                                    <input type="text" id="table-name" placeholder="Table 15" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Capacité (personnes)</label>
+                                    <input type="number" id="table-capacity" min="1" max="20" value="4" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Forme</label>
+                                        <select id="table-shape">
+                                            <option value="round">Ronde</option>
+                                            <option value="square">Carrée</option>
+                                            <option value="rectangular">Rectangulaire</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <select id="table-type">
+                                            <option value="standard">Standard</option>
+                                            <option value="vip">VIP</option>
+                                            <option value="outdoor">Terrasse</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Position X (%)</label>
+                                        <input type="number" id="table-x" min="0" max="90" value="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Position Y (%)</label>
+                                        <input type="number" id="table-y" min="0" max="85" value="50">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-full">Ajouter la Table</button>
+                            </form>
+                        </div>
+                        <div class="form-card">
+                            <h3>Fond du plan de salle</h3>
+                            <div class="floor-bg-preview" id="floor-bg-preview"></div>
+                            <input type="file" id="floor-bg-input" accept="image/*" style="display: none;">
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button type="button" class="btn btn-primary" id="floor-bg-upload">Importer</button>
+                                <button type="button" class="btn btn-gold" id="floor-bg-map">Fond : Carte</button>
+                                <button type="button" class="btn btn-danger" id="floor-bg-remove">Supprimer</button>
+                            </div>
+                            <small style="color: var(--color-text-light); font-size: 0.8rem;">Importez le plan/la photo de votre salle, ou utilisez la carte Maps comme fond. Les tables se posent dessus, ici et chez le client.</small>
+                        </div>
+                    </div>
+                    <div class="tables-main">
+                        <div class="form-card">
+                            <div class="floor-plan-header">
+                                <h3>Plan de la Salle</h3>
+                                <div class="floor-plan-legend">
+                                    <span class="legend-item"><span class="legend-color available"></span> Disponible</span>
+                                    <span class="legend-item"><span class="legend-color reserved"></span> Réservée</span>
+                                    <span class="legend-item"><span class="legend-color occupied"></span> Occupée</span>
+                                    <span class="legend-item"><span class="legend-color vip"></span> VIP</span>
+                                    <span class="legend-item"><span class="legend-color outdoor"></span> Terrasse</span>
+                                </div>
+                            </div>
+                            <div class="floor-plan" id="floor-plan">
+                                <!-- Tables rendered here -->
+                            </div>
+                        </div>
+                        <div class="form-card" id="table-details-card" style="display: none;">
+                            <h3>Détails de la Table</h3>
+                            <div id="table-details"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div class="tab-content" id="tab-security">
+                <div class="security-grid">
+                    <div class="form-card">
+                        <h3>État de la Sécurité</h3>
+                        <div class="security-status" id="security-status">
+                            <div class="status-item">
+                                <span class="status-label">Session</span>
+                                <span class="status-value" id="security-session">Vérification...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Verrouillage</span>
+                                <span class="status-value" id="security-lockout">Vérification...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Tentatives</span>
+                                <span class="status-value" id="security-attempts">Vérification...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Dernière sauvegarde</span>
+                                <span class="status-value" id="security-backup">Vérification...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Uptime</span>
+                                <span class="status-value" id="security-uptime">Vérification...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Erreurs</span>
+                                <span class="status-value" id="security-errors">Vérification...</span>
+                            </div>
+                        </div>
+                        <div class="security-actions">
+                            <button class="btn btn-primary" id="refresh-security-status">Actualiser</button>
+                            <button class="btn btn-danger" id="clear-audit-log">Effacer le journal</button>
+                            <button class="btn btn-danger" id="force-backup">Sauvegarde forcée</button>
+                        </div>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>Journal d'Audit</h3>
+                        <div class="audit-log-wrapper">
+                            <div class="audit-log-list" id="audit-log-list">
+                                <p class="empty-state">Aucune entrée dans le journal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Tab (OWNER only) -->
+            <div class="tab-content" id="tab-users">
+                <div class="tab-header">
+                    <h3>Gestion des Utilisateurs</h3>
+                </div>
+                <div class="form-card">
+                    <h3>Créer un utilisateur</h3>
+                    <form id="add-user-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nom d'utilisateur</label>
+                                <input type="text" id="new-username" placeholder="ex: serveur1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de passe</label>
+                                <input type="password" id="new-user-password" placeholder="min. 6 caractères" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Rôle</label>
+                            <select id="new-user-role">
+                                <option value="staff">Staff — réservations + tables uniquement</option>
+                                <option value="owner">Owner — accès total</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer l'utilisateur</button>
+                    </form>
+                </div>
+                <div class="users-list" id="admin-users-list" style="margin-top: 24px;"></div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="tab-settings">
+                <div class="form-card">
+                    <h3>Paramètres</h3>
+                    <div class="settings-group">
+                        <h4>Réinitialiser les données</h4>
+                        <p>Restaurer toutes les données par défaut du site.</p>
+                        <button class="btn btn-danger" id="reset-data">Réinitialiser</button>
+                    </div>
+                    <div class="settings-group">
+                        <h4>Mot de passe admin</h4>
+                        <p>Changez le mot de passe d'accès au dashboard.</p>
+                        <form id="password-form" class="password-form">
+                            <input type="password" id="new-password" placeholder="Nouveau mot de passe" required>
+                            <button type="submit" class="btn btn-primary">Changer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Modifier</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Crop Modal (frame the photo before importing) -->
+    <div class="modal" id="crop-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cadrer la photo</h3>
+                <button class="modal-close" id="crop-modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="crop-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="security.js"></script>
+    <script src="uptime-guard.js"></script>
+    <script src="table-management.js"></script>
+    <script src="media-store.js"></script>
+    <script src="cropper.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

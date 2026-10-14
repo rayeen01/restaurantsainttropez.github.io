@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page introuvable | Saint Tropez</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2d0a12 0%, #4a0e1c 100%);
+            color: #faf5f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+        .card { max-width: 560px; }
+        .logo { height: 72px; margin-bottom: 20px; }
+        .code {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5rem, 18vw, 9rem);
+            font-weight: 700;
+            line-height: 1;
+            color: #c9a96e;
+            text-shadow: 0 6px 40px rgba(201,169,110,.35);
+        }
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 12px 0 8px; }
+        p { opacity: 0.8; margin-bottom: 32px; font-style: italic; }
+        .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-block; padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s ease; }
+        .btn-gold { background: #c9a96e; color: #fff; }
+        .btn-gold:hover { background: #a8864a; transform: translateY(-2px); }
+        .btn-outline { border: 2px solid #faf5f0; color: #faf5f0; }
+        .btn-outline:hover { background: #faf5f0; color: #4a0e1c; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="LOGO/logo.png" alt="Saint Tropez" class="logo" onerror="this.style.display='none'">
+        <div class="code">404</div>
+        <h1>Page introuvable</h1>
+        <p>La table que vous cherchez n'est pas ici… mais les nôtres vous attendent au restaurant.</p>
+        <div class="actions">
+            <a href="index.html" class="btn btn-gold">Retour à l'accueil</a>
+            <a href="index.html#reservation" class="btn btn-outline">Réserver une table</a>
+        </div>
+    </div>
+</body>
+</html>
